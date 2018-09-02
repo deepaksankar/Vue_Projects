@@ -1,0 +1,33 @@
+<!Doctype html>
+<html>
+    <head>
+        <title>Vue Project</title>
+<!--        <script src="/../../Web_App/Vue_Projects/global/vue.js"></script>-->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+    </head>
+    <body>
+        <div id = "app">
+<!--            <p>{{ message }}</p>-->
+<!--            <span v-if="Cena">{{ message }}</span>-->
+            <ol>
+<!--
+                <li v-for = 'todo in todos'>
+                    {{ todo.text }}
+                </li>
+-->
+                <todo-item
+                           v-for= 'item in todos'
+                           v-bind:todo='item'
+                           v-bind:key='item.id'>
+                </todo-item>
+                
+            </ol>
+<!--
+            <input v-model='message'>
+            <button v-on:click="reverseMessage">Reverse Message</button>
+-->
+        </div>
+        <script src="js/index.js"></script>
+    </body>
+</html>
