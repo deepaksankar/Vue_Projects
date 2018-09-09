@@ -33,12 +33,19 @@ img {
 	width: 8rem; height: 8rem;
 	vertical-align: calc(-0.12109375em);
 }
+.breathe--man { animation: breathe 4.0s infinite; }
+.breathe--dog { animation: breathe 0.5s infinite; }
 
+@keyframes breathe {
+	  0% { transform: scale(0.95); }
+	 50% { transform: scale(1.05); }
+	100% { transform: scale(0.95); }
+}
 		</style>
 	</head>
 	<body>
 
-		<div id="app">
+		<div id="app" :style="{ background: background() }">
 <!--
             <input type='text' v-model='message2'>
 			<p v-html = 'message1.slice(0,7) + message2 + message1.slice(12)'></p>
@@ -57,9 +64,12 @@ img {
             <ron></ron>
             <hermione></hermione>
 -->
+<!--
             <wizard :name = "harry"    :cast="oculus_reparo" ></wizard>
             <wizard :name = "ron"      :cast="wingardium_leviosa"></wizard>
             <wizard :name = "hermione" :cast="alohomora" ></wizard>
+-->
+            <p v-html="active" @click="animagus" :class="breathe()"></p>
 
 		<script>
 
@@ -115,7 +125,13 @@ var app = new Vue({
         ron : emojify("ron"),
         scabbers : emojify("scabbers"),
         hermione : emojify("hermione"),
-        crookshanks : emojify("crookshanks")
+        crookshanks : emojify("crookshanks"),
+        active: emojify("sirius--man"),
+		// sirius is an object that contains two states: man and dog
+		sirius: {
+			man: emojify("sirius--man"),
+			dog: emojify("sirius--dog")
+		}
     },
     methods : {
         wizards : function() {
@@ -125,6 +141,30 @@ var app = new Vue({
                 { name : this.hermione, pet : this.crookshanks }
             ]
         },
+        // an animagus is a wizard whom can shapeshift
+		animagus: function () {
+			this.active = (
+				this.active == this.sirius.man ?
+					this.sirius.dog :
+					this.sirius.man
+			)
+		},
+		// breathe returns the corresponding .breathe--*
+		breathe: function () {
+			return (
+				this.active == this.sirius.man ?
+					"breathe--man" :
+					"breathe--dog"
+			)
+		},
+		// background returns the corresponding background
+		background: function () {
+			return (
+				this.active == this.sirius.man ?
+					"" :
+					"black"
+			)
+		},
         oculus_reparo: cast(emojify("oculus-reparo")),		
 		// wingardium_leviosa returns a spell (function) that levitates an object
 		wingardium_leviosa: cast(emojify("wingardium-leviosa")),
